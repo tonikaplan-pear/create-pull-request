@@ -114,11 +114,6 @@ def process_event(event_name, event_data, repo, branch, base, remote_exists):
     # Update URL for the 'origin' remote
     set_git_remote_url(repo.git, github_token, github_repository)
 
-    # Push the local changes to the remote branch
-    print("Pushing changes.")
-    push_result = push_changes(repo.git, branch, commit_message)
-    print(push_result)
-
     # If the remote existed then we are using fixed branch strategy.
     # A PR should already exist and we can finish here.
     if remote_exists:
