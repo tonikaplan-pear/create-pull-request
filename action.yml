@@ -1,9 +1,9 @@
-name: 'Create Pull Request'
-author: 'Peter Evans'
+name: 'Create Pull Request Custom'
+author: 'Toni Kaplan'
 description: 'Creates a pull request for changes to your repository in the actions workspace'
 runs:
   using: 'docker'
-  image: 'docker://peterevans/create-pull-request:1.5.4'
+  image: 'docker://tonarie94/create-pull-request-test-ignore:latest'
 branding:
   icon: 'git-pull-request'  
   color: 'gray-dark'
