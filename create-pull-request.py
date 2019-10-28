@@ -122,6 +122,7 @@ def process_event(event_name, event_data, repo, branch, base, remote_exists):
 
     # Create the pull request
     print("Creating a request to pull %s into %s." % (branch, base))
+    print("title %s body %s branch %s base %s head %s" % (title, body, branch, base, head))
     github_repo = Github(github_token).get_repo(github_repository)
     pull_request = github_repo.create_pull(
         title=title,
@@ -236,6 +237,9 @@ if skip_ignore_event or not ignore_event(event_name, event_data):
             sys.exit(1)
 
     # Checkout branch
+    print(
+        "Checking out '%s' branch" %
+        branch)
     checkout_branch(repo.git, remote_exists, branch)
 
     process_event(
