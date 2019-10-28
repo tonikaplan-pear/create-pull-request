@@ -78,9 +78,11 @@ def checkout_branch(git, remote_exists, branch):
 
 
 def push_changes(git, branch, commit_message):
-    # git.add('-A')
-    # git.commit("--allow-empty", m=commit_message)
-    return git.push('-f', '--set-upstream', 'origin', branch)
+    try:
+        git.add('-A')
+        git.commit("--allow-empty", m=commit_message)
+    finally:
+        return git.push('-f', '--set-upstream', 'origin', branch)
 
 
 def cs_string_to_list(str):
