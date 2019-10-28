@@ -244,11 +244,11 @@ if skip_ignore_event or not ignore_event(event_name, event_data):
         "Checking out '%s' branch" %
         branch)
     checkout_branch(repo.git, remote_exists, branch)
-
-    process_event(
-        event_name,
-        event_data,
-        repo,
-        branch,
-        base,
-        remote_exists)
+    print("end early")
+    # process_event(
+    #     event_name,
+    #     event_data,
+    #     repo,
+    #     branch,
+    #     base,
+    #     remote_exists)
