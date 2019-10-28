@@ -78,9 +78,12 @@ def checkout_branch(git, remote_exists, branch):
 
 
 def push_changes(git, branch, commit_message):
+    print("Pushing changes with try")
     try:
         git.add('-A')
-        git.commit("--allow-empty", m=commit_message)
+        git.commit(m=commit_message)
+    except BaseException:
+        print("exception with commit")
     finally:
         return git.push('-f', '--set-upstream', 'origin', branch)
 
