@@ -122,7 +122,7 @@ def process_event(event_name, event_data, repo, branch, base, remote_exists):
 
     # Create the pull request
     print("Creating a request to pull %s into %s." % (branch, base))
-    print("title %s body %s branch %s base %s head %s" % (title, body, branch, base, head))
+    print("title %s body %s branch %s base %s" % (title, body, branch, base))
     github_repo = Github(github_token).get_repo(github_repository)
     pull_request = github_repo.create_pull(
         title=title,
