@@ -66,14 +66,17 @@ def set_git_remote_url(git, token, github_repository):
 
 def checkout_branch(git, remote_exists, branch):
     if remote_exists:
+        print(" ---- exists")
         git.stash('--include-untracked')
         git.checkout(branch)
         try:
             git.stash('pop')
         except BaseException:
+            print(" ----err")
             git.checkout('--theirs', '.')
             git.reset()
     else:
+        print(" ---- doesnt exist")
         git.checkout('HEAD', b=branch)
 
 
