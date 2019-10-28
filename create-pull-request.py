@@ -188,7 +188,7 @@ if skip_ignore_event or not ignore_event(event_name, event_data):
     # Set the base branch
     if base_override is not None:
         base = base_override
-        checkout_branch(repo.git, True, base)
+    #     checkout_branch(repo.git, True, base)
     elif github_ref.startswith('refs/pull/'):
         # Switch to the merging branch instead of the merge commit
         base = os.environ['GITHUB_HEAD_REF']
