@@ -245,13 +245,13 @@ if skip_ignore_event or not ignore_event(event_name, event_data):
 
     # Check if there are changes to pull request
     # if repo.is_dirty() or len(repo.untracked_files) > 0:
-        print("Repository has modified or untracked files.")
-        process_event(
-            event_name,
-            event_data,
-            repo,
-            branch,
-            base,
-            remote_exists)
+    print("Repository has modified or untracked files.")
+    process_event(
+        event_name,
+        event_data,
+        repo,
+        branch,
+        base,
+        remote_exists)
     # else:
     #     print("Repository has no modified or untracked files. Skipping.")
