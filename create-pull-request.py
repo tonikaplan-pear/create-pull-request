@@ -66,17 +66,14 @@ def set_git_remote_url(git, token, github_repository):
 
 def checkout_branch(git, remote_exists, branch):
     if remote_exists:
-        print(" ---- exists")
         git.stash('--include-untracked')
         git.checkout(branch)
         try:
             git.stash('pop')
         except BaseException:
-            print(" ----err")
             git.checkout('--theirs', '.')
             git.reset()
     else:
-        print(" ---- doesnt exist")
         git.checkout('HEAD', b=branch)
 
 
@@ -117,6 +114,11 @@ def process_event(event_name, event_data, repo, branch, base, remote_exists):
     # Update URL for the 'origin' remote
     set_git_remote_url(repo.git, github_token, github_repository)
 
+    # Push the local changes to the remote branch
+    print("Pushing changes.")
+    push_result = push_changes(repo.git, branch, commit_message)
+    print(push_result)
+
     # If the remote existed then we are using fixed branch strategy.
     # A PR should already exist and we can finish here.
     if remote_exists:
@@ -125,7 +127,6 @@ def process_event(event_name, event_data, repo, branch, base, remote_exists):
 
     # Create the pull request
     print("Creating a request to pull %s into %s." % (branch, base))
-    print("title %s body %s branch %s base %s" % (title, body, branch, base))
     github_repo = Github(github_token).get_repo(github_repository)
     pull_request = github_repo.create_pull(
         title=title,
@@ -188,7 +189,7 @@ if skip_ignore_event or not ignore_event(event_name, event_data):
     # Set the base branch
     if base_override is not None:
         base = base_override
-    #     checkout_branch(repo.git, True, base)
+        # checkout_branch(repo.git, True, base)
     elif github_ref.startswith('refs/pull/'):
         # Switch to the merging branch instead of the merge commit
         base = os.environ['GITHUB_HEAD_REF']
@@ -240,15 +241,17 @@ if skip_ignore_event or not ignore_event(event_name, event_data):
             sys.exit(1)
 
     # Checkout branch
-    print(
-        "Checking out '%s' branch" %
-        branch)
     checkout_branch(repo.git, remote_exists, branch)
-    print("end early")
-    # process_event(
-    #     event_name,
-    #     event_data,
-    #     repo,
-    #     branch,
-    #     base,
-    #     remote_exists)
+
+    # Check if there are changes to pull request
+    if repo.is_dirty() or len(repo.untracked_files) > 0:
+        print("Repository has modified or untracked files.")
+        process_event(
+            event_name,
+            event_data,
+            repo,
+            branch,
+            base,
+            remote_exists)
+    else:
+        print("Repository has no modified or untracked files. Skipping.")
