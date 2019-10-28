@@ -244,7 +244,7 @@ if skip_ignore_event or not ignore_event(event_name, event_data):
     checkout_branch(repo.git, remote_exists, branch)
 
     # Check if there are changes to pull request
-    if repo.is_dirty() or len(repo.untracked_files) > 0:
+    # if repo.is_dirty() or len(repo.untracked_files) > 0:
         print("Repository has modified or untracked files.")
         process_event(
             event_name,
@@ -253,5 +253,5 @@ if skip_ignore_event or not ignore_event(event_name, event_data):
             branch,
             base,
             remote_exists)
-    else:
-        print("Repository has no modified or untracked files. Skipping.")
+    # else:
+    #     print("Repository has no modified or untracked files. Skipping.")
