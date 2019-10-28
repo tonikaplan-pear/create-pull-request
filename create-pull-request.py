@@ -79,7 +79,7 @@ def checkout_branch(git, remote_exists, branch):
 
 def push_changes(git, branch, commit_message):
     git.add('-A')
-    git.commit(m=commit_message)
+    git.commit("--allow-empty", m=commit_message)
     return git.push('-f', '--set-upstream', 'origin', branch)
 
 
