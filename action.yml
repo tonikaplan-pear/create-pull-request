@@ -3,7 +3,7 @@ author: 'Toni Kaplan'
 description: 'Creates a pull request for changes to your repository in the actions workspace'
 runs:
   using: 'docker'
-  image: 'docker://tonarie94/create-pull-request-test-ignore:latest'
+  image: 'docker://tonarie94/create-pull-request-test-ignore:cpr-v2'
 branding:
   icon: 'git-pull-request'  
   color: 'gray-dark'
